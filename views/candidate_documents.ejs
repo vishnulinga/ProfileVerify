@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Documents</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Candidate Documents</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/candidate/profile">My Profile</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <% if (success && success.length) { %>
+      <div class="flash success"><%= success[0] %></div>
+    <% } %>
+    <% if (error && error.length) { %>
+      <div class="flash error"><%= error[0] %></div>
+    <% } %>
+
+    <section>
+      <h2>Upload Document</h2>
+      <form method="POST" action="/candidate/documents" enctype="multipart/form-data" class="form">
+        <label>Document type
+          <select name="doc_type" required>
+            <option value="">Select type</option>
+            <option value="id">ID</option>
+            <option value="passport">Passport</option>
+            <option value="driver_license">Driver License</option>
+            <option value="ead">EAD</option>
+            <option value="visa">Visa</option>
+            <option value="i797">I-797</option>
+            <option value="offer_letter">Offer Letter</option>
+            <option value="experience_letter">Experience Letter</option>
+            <option value="paystub">Paystub</option>
+            <option value="w2">W2</option>
+            <option value="education_certificate">Education Certificate</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label>File
+          <input type="file" name="document" required>
+        </label>
+        <button type="submit">Upload</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Uploaded Documents</h2>
+      <% if (!documents || !documents.length) { %>
+        <p>No documents uploaded yet.</p>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Original name</th>
+              <th>Uploaded at</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% documents.forEach(function(doc) { %>
+              <tr>
+                <td><%= doc.type %></td>
+                <td><%= doc.original_filename %></td>
+                <td><%= doc.uploaded_at %></td>
+                <td><a href="/uploads/<%= doc.stored_filename %>" target="_blank">Open</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>

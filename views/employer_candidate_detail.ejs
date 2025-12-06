@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employer - Candidate Detail</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Employer - Candidate Detail</h1>
+    <nav>
+      <a href="/employer/candidates">Back to list</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <% if (success && success.length) { %>
+      <div class="flash success"><%= success[0] %></div>
+    <% } %>
+    <% if (error && error.length) { %>
+      <div class="flash error"><%= error[0] %></div>
+    <% } %>
+
+    <section class="panel">
+      <h2>Profile</h2>
+      <p><strong>Name:</strong> <%= profile.full_name || '(no name)' %></p>
+      <p><strong>Headline:</strong> <%= profile.headline || '-' %></p>
+      <p><strong>Location:</strong> <%= profile.location || '-' %></p>
+      <p><strong>Experience (years):</strong> <%= profile.total_experience_years || '-' %></p>
+      <p><strong>Skills:</strong> <%= profile.primary_skills || '-' %></p>
+      <p><strong>LinkedIn:</strong>
+        <% if (profile.linkedin_url) { %>
+          <a href="<%= profile.linkedin_url %>" target="_blank"><%= profile.linkedin_url %></a>
+        <% } else { %>
+          -
+        <% } %>
+      </p>
+      <p><strong>GitHub:</strong>
+        <% if (profile.github_url) { %>
+          <a href="<%= profile.github_url %>" target="_blank"><%= profile.github_url %></a>
+        <% } else { %>
+          -
+        <% } %>
+      </p>
+      <p><strong>Verification level:</strong> <%= profile.verification_level %></p>
+      <p><strong>Risk score:</strong> <%= profile.risk_score %></p>
+    </section>
+
+    <section class="panel">
+      <h2>Contact</h2>
+      <p>You can reach this candidate at: <strong><%= profile.email %></strong></p>
+      <p>(In a real product, you would hide the email behind a credit/booking system.)</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - Candidate Detail</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Admin - Candidate Detail</h1>
+    <nav>
+      <a href="/admin/candidates">Back to list</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <% if (success && success.length) { %>
+      <div class="flash success"><%= success[0] %></div>
+    <% } %>
+    <% if (error && error.length) { %>
+      <div class="flash error"><%= error[0] %></div>
+    <% } %>
+
+    <section class="panel">
+      <h2>Profile</h2>
+      <p><strong>Name:</strong> <%= profile.full_name || '(no name)' %></p>
+      <p><strong>Email:</strong> <%= profile.email %></p>
+      <p><strong>DOB:</strong> <%= profile.dob || '-' %></p>
+      <p><strong>Phone:</strong> <%= profile.phone || '-' %></p>
+      <p><strong>Location:</strong> <%= profile.location || '-' %></p>
+      <p><strong>Headline:</strong> <%= profile.headline || '-' %></p>
+      <p><strong>Experience (years):</strong> <%= profile.total_experience_years || '-' %></p>
+      <p><strong>Skills:</strong> <%= profile.primary_skills || '-' %></p>
+      <p><strong>LinkedIn:</strong>
+        <% if (profile.linkedin_url) { %>
+          <a href="<%= profile.linkedin_url %>" target="_blank"><%= profile.linkedin_url %></a>
+        <% } else { %>
+          -
+        <% } %>
+      </p>
+      <p><strong>GitHub:</strong>
+        <% if (profile.github_url) { %>
+          <a href="<%= profile.github_url %>" target="_blank"><%= profile.github_url %></a>
+        <% } else { %>
+          -
+        <% } %>
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Verification</h2>
+      <form method="POST" action="/admin/candidates/<%= profile.id %>/verification" class="form">
+        <label>Status
+          <select name="verification_status">
+            <option value="unsubmitted" <%= profile.verification_status === 'unsubmitted' ? 'selected' : '' %>>Unsubmitted</option>
+            <option value="pending" <%= profile.verification_status === 'pending' ? 'selected' : '' %>>Pending</option>
+            <option value="in_review" <%= profile.verification_status === 'in_review' ? 'selected' : '' %>>In review</option>
+            <option value="verified" <%= profile.verification_status === 'verified' ? 'selected' : '' %>>Verified</option>
+            <option value="rejected" <%= profile.verification_status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+          </select>
+        </label>
+        <label>Level
+          <select name="verification_level">
+            <option value="none" <%= profile.verification_level === 'none' ? 'selected' : '' %>>None</option>
+            <option value="bronze" <%= profile.verification_level === 'bronze' ? 'selected' : '' %>>Bronze</option>
+            <option value="silver" <%= profile.verification_level === 'silver' ? 'selected' : '' %>>Silver</option>
+            <option value="gold" <%= profile.verification_level === 'gold' ? 'selected' : '' %>>Gold</option>
+            <option value="platinum" <%= profile.verification_level === 'platinum' ? 'selected' : '' %>>Platinum</option>
+          </select>
+        </label>
+        <label>Risk score (0–100)
+          <input type="number" name="risk_score" min="0" max="100" value="<%= profile.risk_score %>">
+        </label>
+        <label>Admin notes
+          <textarea name="admin_notes" rows="4"><%= profile.admin_notes || '' %></textarea>
+        </label>
+        <button type="submit">Save Verification</button>
+      </form>
+      <p><strong>Last reviewed at:</strong> <%= profile.last_reviewed_at || '-' %></p>
+    </section>
+
+    <section>
+      <h2>Documents</h2>
+      <% if (!documents || !documents.length) { %>
+        <p>No documents uploaded.</p>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Original name</th>
+              <th>MIME type</th>
+              <th>Size (bytes)</th>
+              <th>Uploaded at</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% documents.forEach(function(doc) { %>
+              <tr>
+                <td><%= doc.type %></td>
+                <td><%= doc.original_filename %></td>
+                <td><%= doc.mime_type %></td>
+                <td><%= doc.size %></td>
+                <td><%= doc.uploaded_at %></td>
+                <td><a href="/uploads/<%= doc.stored_filename %>" target="_blank">Open</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile Verify MVP</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Profile Verification MVP</h1>
+    <nav>
+      <% if (!currentUser) { %>
+        <a href="/register">Candidate Register</a>
+        <a href="/employer/register">Employer Register</a>
+        <a href="/login">Login</a>
+      <% } else { %>
+        <% if (currentUser.role === 'candidate') { %>
+          <a href="/candidate/profile">My Profile</a>
+          <a href="/candidate/documents">My Documents</a>
+        <% } else if (currentUser.role === 'admin') { %>
+          <a href="/admin/candidates">Admin Dashboard</a>
+        <% } else if (currentUser.role === 'employer') { %>
+          <a href="/employer/candidates">Employer Dashboard</a>
+        <% } %>
+        <a href="/logout">Logout</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <% if (success && success.length) { %>
+      <div class="flash success"><%= success[0] %></div>
+    <% } %>
+    <% if (error && error.length) { %>
+      <div class="flash error"><%= error[0] %></div>
+    <% } %>
+
+    <section>
+      <h2>What this MVP does</h2>
+      <ul>
+        <li>Candidates can register, edit a profile, and upload documents.</li>
+        <li>Admin can review candidates, view documents, and set verification status / level.</li>
+        <li>Employers can register and browse verified candidates (read-only view of profiles).</li>
+      </ul>
+      <p>Seeded admin user for testing: <strong>admin@example.com / admin123</strong></p>
+    </section>
+  </main>
+</body>
+</html>

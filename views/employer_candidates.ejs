@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employer - Verified Candidates</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Employer Dashboard - Verified Candidates</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <% if (success && success.length) { %>
+      <div class="flash success"><%= success[0] %></div>
+    <% } %>
+    <% if (error && error.length) { %>
+      <div class="flash error"><%= error[0] %></div>
+    <% } %>
+
+    <section>
+      <h2>Verified Candidates</h2>
+      <% if (!candidates || !candidates.length) { %>
+        <p>No verified candidates yet.</p>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Headline</th>
+              <th>Location</th>
+              <th>Experience (years)</th>
+              <th>Skills</th>
+              <th>Level</th>
+              <th>Risk</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% candidates.forEach(function(c) { %>
+              <tr>
+                <td><%= c.full_name || '(no name)' %></td>
+                <td><%= c.headline || '-' %></td>
+                <td><%= c.location || '-' %></td>
+                <td><%= c.total_experience_years || '-' %></td>
+                <td><%= c.primary_skills || '-' %></td>
+                <td><%= c.verification_level %></td>
+                <td><%= c.risk_score %></td>
+                <td><a href="/employer/candidates/<%= c.id %>">Open</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>
