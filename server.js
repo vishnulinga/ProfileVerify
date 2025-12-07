@@ -139,6 +139,12 @@ app.post('/register', (req, res) => {
   });
 });
 
+//legal documents
+app.get('/privacy', (req, res) => res.render('privacy'));
+app.get('/terms', (req, res) => res.render('terms'));
+app.get('/consent', (req, res) => res.render('consent'));
+app.get('/employer-terms', (req, res) => res.render('employer_terms'));
+
 // Employer registration
 app.get('/employer/register', (req, res) => {
   res.render('employer_register');

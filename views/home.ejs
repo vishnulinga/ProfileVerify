@@ -1,49 +1,139 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Profile Verify MVP</title>
+  <title>ProfileCheck – Verified Candidates for Real Hiring</title>
   <link rel="stylesheet" href="/public/styles.css">
 </head>
+
 <body>
-  <header>
-    <h1>Profile Verification MVP</h1>
-    <nav>
-      <% if (!currentUser) { %>
-        <a href="/register">Candidate Register</a>
-        <a href="/employer/register">Employer Register</a>
-        <a href="/login">Login</a>
-      <% } else { %>
-        <% if (currentUser.role === 'candidate') { %>
-          <a href="/candidate/profile">My Profile</a>
-          <a href="/candidate/documents">My Documents</a>
-        <% } else if (currentUser.role === 'admin') { %>
-          <a href="/admin/candidates">Admin Dashboard</a>
-        <% } else if (currentUser.role === 'employer') { %>
-          <a href="/employer/candidates">Employer Dashboard</a>
-        <% } %>
-        <a href="/logout">Logout</a>
+<header>
+  <h1>ProfileCheck</h1>
+  <nav>
+    <% if (!currentUser) { %>
+      <a href="/register">Candidate Register</a>
+      <a href="/employer/register">Employer Register</a>
+      <a href="/login">Login</a>
+    <% } else { %>
+      <% if (currentUser.role === 'candidate') { %>
+        <a href="/candidate/profile">My Profile</a>
+        <a href="/candidate/documents">My Documents</a>
+      <% } else if (currentUser.role === 'admin') { %>
+        <a href="/admin/candidates">Admin Dashboard</a>
+      <% } else if (currentUser.role === 'employer') { %>
+        <a href="/employer/candidates">Employer Dashboard</a>
       <% } %>
-    </nav>
-  </header>
-
-  <main>
-    <% if (success && success.length) { %>
-      <div class="flash success"><%= success[0] %></div>
+      <a href="/logout">Logout</a>
     <% } %>
-    <% if (error && error.length) { %>
-      <div class="flash error"><%= error[0] %></div>
-    <% } %>
+  </nav>
+</header>
 
-    <section>
-      <h2>What this MVP does</h2>
-      <ul>
-        <li>Candidates can register, edit a profile, and upload documents.</li>
-        <li>Admin can review candidates, view documents, and set verification status / level.</li>
-        <li>Employers can register and browse verified candidates (read-only view of profiles).</li>
+<main>
+  <% if (success && success.length) { %>
+    <div class="flash success"><%= success[0] %></div>
+  <% } %>
+  <% if (error && error.length) { %>
+    <div class="flash error"><%= error[0] %></div>
+  <% } %>
+
+  <!-- Hero -->
+  <section class="hero panel">
+    <div class="hero-left">
+      <div class="hero-tag">
+        <span>For US tech hiring</span>
+      </div>
+      <h2>Stop fake profiles.<br/>Start hiring from verified talent.</h2>
+      <p class="lead">
+        ProfileCheck helps employers avoid fake candidates and helps genuine
+        engineers stand out with verified profiles, documents, and work history.
+      </p>
+      <div class="hero-buttons">
+        <a href="/register">
+          <button class="btn btn-primary">I’m a Candidate</button>
+        </a>
+        <a href="/employer/register">
+          <button class="btn btn-ghost">I’m an Employer</button>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-stat">
+        <div class="hero-stat-item">
+          <div class="hero-stat-label">Layer 1</div>
+          <div class="hero-stat-value">Identity &amp; Docs</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-label">Layer 2</div>
+          <div class="hero-stat-value">Experience Check</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-item">
+          <div class="hero-stat-label">Layer 3</div>
+          <div class="hero-stat-value">Risk Scoring</div>
+        </div>
+        <div class="hero-stat-item">
+          <div class="hero-stat-label">Layer 4</div>
+          <div class="hero-stat-value">Verified Pool</div>
+        </div>
+      </div>
+      <ul class="hero-list">
+        <li>Genuine candidates get a verification badge.</li>
+        <li>Employers search only verified profiles.</li>
+        <li>No more guessing who is real in IT hiring.</li>
       </ul>
-      <p>Seeded admin user for testing: <strong>admin@example.com / admin123</strong></p>
-    </section>
-  </main>
+    </div>
+  </section>
+
+  <!-- Why section -->
+  <section class="panel">
+    <h3>Why ProfileCheck exists</h3>
+    <ul>
+      <li>Too many fake resumes and “proxy” candidates in IT hiring.</li>
+      <li>Legit engineers lose opportunities to dishonest profiles.</li>
+      <li>Hiring managers waste time screening candidates they should never meet.</li>
+    </ul>
+    <p>
+      ProfileCheck adds a simple verification step before interviews, so everyone
+      starts from a place of trust.
+    </p>
+  </section>
+
+  <!-- How it works -->
+  <section class="panel">
+    <h3>How it works</h3>
+    <ol>
+      <li><strong>Candidates upload documents</strong> – IDs, experience letters, paystubs, education proofs.</li>
+      <li><strong>We review consistency</strong> – names, dates, companies, and history.</li>
+      <li><strong>Verified candidates appear to employers</strong> in the ProfileCheck pool.</li>
+      <li><strong>Employers contact only verified talent</strong> instead of wasting time on fake profiles.</li>
+    </ol>
+  </section>
+
+  <!-- Audience split -->
+  <section class="panel">
+    <h3>For candidates</h3>
+    <p>
+      You’re real, your experience is real, and your documents back it up.
+      ProfileCheck gives you a verification badge that helps you stand out in
+      a sea of fake profiles.
+    </p>
+  </section>
+
+  <section class="panel">
+    <h3>For employers</h3>
+    <p>
+      Log in as an employer and browse only verified candidates. Stop guessing
+      who is real. Start interviews from a shortlist you can trust.
+    </p>
+  </section>
+
+  <footer>
+    <a href="/privacy">Privacy Policy</a> ·
+    <a href="/terms">Terms of Use</a> ·
+    <a href="/consent">Candidate Consent</a> ·
+    <a href="/employer-terms">Employer Terms</a>
+  </footer>
+</main>
 </body>
 </html>
