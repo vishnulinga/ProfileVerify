@@ -18,7 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Static files
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(uploadsDir));
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,9 +42,10 @@ app.use((req, res, next) => {
 });
 
 // Multer setup for file uploads
+const uploadsDir = process.env.UPLOADS_DIR || path.join(__dirname, 'uploads');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, 'uploads'));
+    cb(null, uploadsDir);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix =
