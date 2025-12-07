@@ -12,6 +12,8 @@ const db = require('./db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
+
 // View engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -41,8 +43,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Multer setup for file uploads
+// Multer setup for file uploads.
+const fs = require("fs");
+const path = require("path");
 const uploadsDir = process.env.UPLOADS_DIR || path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadsDir);
