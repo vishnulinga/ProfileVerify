@@ -11,6 +11,7 @@ const db = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const uploadsDir = process.env.UPLOADS_DIR || path.join(__dirname, 'uploads');
 
 
 
@@ -45,8 +46,8 @@ app.use((req, res, next) => {
 
 // Multer setup for file uploads.
 const fs = require("fs");
-const path = require("path");
-const uploadsDir = process.env.UPLOADS_DIR || path.join(__dirname, 'uploads');
+
+
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
